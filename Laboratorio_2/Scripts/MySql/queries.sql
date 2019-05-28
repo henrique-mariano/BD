@@ -39,11 +39,11 @@ WHERE a.nreal LIKE 'A%';
 SELECT COUNT(*) as "Número de Clientes" FROM CLIENTE;
 
 -- Q8
-SELECT DISTINCT c.nome FROM CLIENTE c
+SELECT DISTINCT c.nome as "Nome do Cliente" FROM CLIENTE c
 JOIN LOCACAO l ON c.codCli = l.codCli;
 
 -- Q9
-SELECT c.nome, l.codLoc FROM CLIENTE c
+SELECT c.nome as "Nome do Cliente", l.codLoc as "Código de locação" FROM CLIENTE c
 JOIN LOCACAO l ON c.codCli = l.codCli;
 
 -- Q10
