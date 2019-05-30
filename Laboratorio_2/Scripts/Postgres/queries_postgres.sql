@@ -1,4 +1,7 @@
--- Henrique Mendes de Freitas Mariano - 17/0012280
+/*
+   Henrique Mendes de Freitas Mariano - 17/0012280
+   Vinicius Toshiyuki - 17/0023664
+*/
 -- Q1
 SELECT * FROM ATOR;
 
@@ -7,22 +10,12 @@ SELECT f.titulo as "Título", c.descricao as "Categoria" FROM FILME f
 JOIN CATEGORIA c ON f.codCat = c.codCat;
 
 -- Q3
-SELECT f.titulo as "Título", a.nreal as "Nome Real" FROM FILME f
+SELECT f.titulo as "Título", a.nreal as "Nome Real do Ator" FROM FILME f
 JOIN FILME_ATOR fa ON f.codFilme = fa.codFilme
 JOIN ATOR a ON fa.codAtor = a.codAtor;
 
 -- Q4
-/*
-SELECT f.titulo as "Título", a.nreal as "Nome Real" FROM FILME f
-LEFT JOIN FILME_ATOR fa ON f.codFilme = fa.codFilme
-LEFT JOIN ATOR a ON a.codAtor = fa.codAtor 
-UNION
-SELECT f.titulo as "Título", a.nreal as "Nome Real" FROM FILME f
-RIGHT JOIN FILME_ATOR fa ON f.codFilme = fa.codFilme
-RIGHT JOIN ATOR a ON a.codAtor = fa.codAtor;
-*/
-
-SELECT f.titulo as "Título", a.nreal as "Nome Real" FROM FILME f
+SELECT f.titulo as "Título", a.nreal as "Nome Real do Ator" FROM FILME f
 FULL OUTER JOIN FILME_ATOR fa ON f.codFilme = fa.codFilme
 FULL OUTER JOIN ATOR a ON a.codAtor = fa.codAtor;
 
@@ -53,14 +46,6 @@ SELECT c.nome as "Nome do Cliente", l.codLoc as "Código de locação" FROM CLIE
 JOIN LOCACAO l ON c.codCli = l.codCli;
 
 -- Q10
--- interpretação 1
-SELECT tab1.nome as "Nome do Cliente", tab1.codLoc as "Código de locação" FROM
-(SELECT nome, codLoc FROM CLIENTE c JOIN LOCACAO l ON c.codCli = l.codCli) tab1
-JOIN
-(SELECT nome, codLoc FROM CLIENTE c JOIN LOCACAO l ON c.codCli = l.codCli) tab2
-ON tab1.codLoc != tab2.codLoc AND tab1.nome = tab2.nome;
- 
--- interpretação 2
 SELECT j.nome as "Nome do Cliente", l.codLoc as "Código de locação" FROM (
 	SELECT CLIENTE.codCli, COUNT(CLIENTE.nome) AS cnome
 	FROM CLIENTE

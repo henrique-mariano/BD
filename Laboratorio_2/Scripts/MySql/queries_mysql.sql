@@ -1,4 +1,8 @@
--- Henrique Mendes de Freitas Mariano - 17/0012280
+/*
+   Henrique Mendes de Freitas Mariano - 17/0012280
+   Vinicius Toshiyuki - 17/0023664
+*/
+
 -- Q1
 SELECT * FROM ATOR;
 
@@ -7,7 +11,7 @@ SELECT f.titulo as "Título", c.descricao as "Categoria" FROM FILME f
 JOIN CATEGORIA c ON f.codCat = c.codCat;
 
 -- Q3
-SELECT f.titulo as "Título", a.nreal as "Nome Real" FROM FILME f
+SELECT f.titulo as "Título", a.nreal as "Nome Real do Ator" FROM FILME f
 JOIN FILME_ATOR fa ON f.codFilme = fa.codFilme
 JOIN ATOR a ON fa.codAtor = a.codAtor;
 
@@ -47,15 +51,12 @@ SELECT c.nome as "Nome do Cliente", l.codLoc as "Código de locação" FROM CLIE
 JOIN LOCACAO l ON c.codCli = l.codCli;
 
 -- Q10
--- interpretação 1
-SELECT tab1.nome as "Nome do Cliente", tab1.codLoc as "Código de locação" FROM
-(SELECT nome, codLoc FROM CLIENTE c JOIN LOCACAO l ON c.codCli = l.codCli) tab1
-JOIN
-(SELECT nome, codLoc FROM CLIENTE c JOIN LOCACAO l ON c.codCli = l.codCli) tab2
-ON tab1.codLoc != tab2.codLoc AND tab1.nome = tab2.nome;
- 
--- interpretação 2
-SELECT c.nome as "Nome do Cliente", l.codLoc as "Código de locação", COUNT(nome) FROM CLIENTE c
-JOIN LOCACAO l ON c.codCli = l.codCli
-GROUP BY nome
-HAVING COUNT(nome) > 1;
+SELECT j.nome as "Nome do Cliente", l.codLoc as "Código de locação" FROM (
+	SELECT CLIENTE.codCli, COUNT(CLIENTE.nome) AS cnome
+	FROM CLIENTE
+	JOIN LOCACAO ON CLIENTE.codCli = LOCACAO.codCli
+	GROUP BY CLIENTE.codCli
+	HAVING COUNT(CLIENTE.codCli) > 1
+) c 
+JOIN CLIENTE j ON c.codCli = j.codCli 
+JOIN LOCACAO l ON c.codCli = l.codCli;
